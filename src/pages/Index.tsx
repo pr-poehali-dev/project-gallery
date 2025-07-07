@@ -18,6 +18,21 @@ interface Project {
 }
 
 const Index = () => {
+  const handleDownload = (project: Project) => {
+    // Создаем временную ссылку для скачивания
+    const link = document.createElement("a");
+    link.href = project.image;
+    link.download = `${project.title}.jpg`;
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const handleView = (project: Project) => {
+    window.open(project.image, "_blank");
+  };
+
   const projects: Project[] = [
     {
       id: "1",
@@ -135,6 +150,7 @@ const Index = () => {
                   <Button
                     size="sm"
                     className="flex-1 bg-black hover:bg-gray-800 text-white"
+                    onClick={() => handleView(project)}
                   >
                     <Icon name="Eye" size={16} className="mr-2" />
                     Просмотр
@@ -143,6 +159,7 @@ const Index = () => {
                     size="sm"
                     variant="outline"
                     className="flex-1 border-gray-300 hover:bg-gray-50"
+                    onClick={() => handleDownload(project)}
                   >
                     <Icon name="Download" size={16} className="mr-2" />
                     Скачать
